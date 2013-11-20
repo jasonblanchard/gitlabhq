@@ -29,6 +29,15 @@ module Issues
       if params[:milestone_id].present?
         @issues = @issues.where(milestone_id: (params[:milestone_id] == '0' ? nil : params[:milestone_id]))
       end
+      
+      # Sort by :sort param
+      @issues = case params[:sort]
+                when 'newest' then @issues.except(:order).order('created_at DESC')
+                when 'oldest' then @issues.except(:order).order('created_at ASC')
+                when 'recently_updated' then @issues.except(:order).order('updated_at DESC')
+                when 'last_updated' then @issues.except(:order).order('updated_at ASC')
+                else @issues
+                end
 
       @issues
     end
