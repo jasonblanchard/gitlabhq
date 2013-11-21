@@ -42,7 +42,7 @@ module Issues
       @issues
     end
 
-    def self.merge_with_filter_params(old_params, new_params)
+    def self.merge_with_filter(old_params, new_params)
       params = old_params.keep_if { |key, value| sort_params.include? key }
       params = params.merge(new_params)
       params

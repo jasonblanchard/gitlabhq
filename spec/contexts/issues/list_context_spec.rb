@@ -58,7 +58,7 @@ describe Issues::ListContext do
     it 'merges sort param with filter params' do
       params = {controller: 'issues', action: 'index', label_name: '', milestone_id: '', scope: '', state: '', assignee_id: '1'}
 
-      new_params = Issues::ListContext.merge_with_filter_params(params, {sort: 'oldest'})
+      new_params = Issues::ListContext.merge_with_filter(params, {sort: 'oldest'})
 
       new_params.should include(:label_name, :milestone_id, :scope, :state, :assignee_id, :sort)
       new_params.should include(:assignee_id => '1')
