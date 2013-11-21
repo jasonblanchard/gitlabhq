@@ -42,16 +42,5 @@ module Issues
       @issues
     end
 
-    def self.merge_with_filter(old_params, new_params)
-      params = old_params.keep_if { |key, value| sort_params.include? key }
-      params = params.merge(new_params)
-      params
-    end
-
-    private
-
-    def self.sort_params
-      [:label_name, :milestone_id, :scope, :state, :assignee_id]
-    end
   end
 end
