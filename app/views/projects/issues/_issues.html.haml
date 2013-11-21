@@ -78,6 +78,22 @@
                   %strong= milestone.title
                   %small.light= milestone.expires_at
 
+        .dropdown.inline.prepend-left-10
+          %a.dropdown-toggle.btn.btn-small{href: '#', "data-toggle" => "dropdown"}
+            %span.light sort:
+            Newest
+            %b.caret
+          %ul.dropdown-menu
+            %li
+              = link_to project_filter_path(Issues::ListContext.merge_with_filter_params(params, {sort: 'newest'})) do
+                Newest
+              = link_to project_filter_path(Issues::ListContext.merge_with_filter_params(params, {sort: 'oldest'})) do
+                Oldest
+              = link_to project_filter_path(Issues::ListContext.merge_with_filter_params(params, {sort: 'recently_updated'})) do
+                Recently Updated
+              = link_to project_filter_path(Issues::ListContext.merge_with_filter_params(params, {sort: 'last_updated'})) do
+                Last Updated
+
 
   %ul.well-list.issues-list
     = render @issues
