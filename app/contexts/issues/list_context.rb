@@ -36,6 +36,8 @@ module Issues
                 when 'oldest' then @issues.except(:order).order('created_at ASC')
                 when 'recently_updated' then @issues.except(:order).order('updated_at DESC')
                 when 'last_updated' then @issues.except(:order).order('updated_at ASC')
+                when 'milestone_due_soon' then @issues.except(:order).joins(:milestone).order("milestones.due_date ASC")
+                when 'milestone_due_later' then @issues.except(:order).joins(:milestone).order("milestones.due_date DESC")
                 else @issues
                 end
 

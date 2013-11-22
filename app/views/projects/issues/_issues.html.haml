@@ -92,7 +92,11 @@
               = link_to project_filter_path(sort: 'recently_updated') do
                 Recently updated
               = link_to project_filter_path(sort: 'last_updated') do
-                Last Updated
+                Last updated
+              = link_to project_filter_path(sort: 'milestone_due_soon') do
+                Milestone due soon
+              = link_to project_filter_path(sort: 'milestone_due_later') do
+                Milestone due later
 
 
   %ul.well-list.issues-list
