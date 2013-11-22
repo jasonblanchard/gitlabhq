@@ -125,7 +125,15 @@ module Grack
 
       # Need to reset seek point
       @request.body.rewind
-      input.force_encoding('ascii-8bit').scan(/refs\/heads\/([\/\w\.-]+)/n).flatten.compact
+
+      # Parse refs
+      refs = input.force_encoding('ascii-8bit').scan(/refs\/heads\/([\/\w\.-]+)/n).flatten.compact
+
+      # Cleanup grabare from refs
+      # if push to multiple branches
+      refs.map do |ref|
+        ref.gsub(/00.*/, "")
+      end
     end
   end
 end
