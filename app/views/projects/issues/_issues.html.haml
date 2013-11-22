@@ -81,7 +81,7 @@
         .dropdown.inline.prepend-left-10
           %a.dropdown-toggle.btn.btn-small{href: '#', "data-toggle" => "dropdown"}
             %span.light sort:
-            Newest
+            = @sort
             %b.caret
           %ul.dropdown-menu
             %li
@@ -90,7 +90,7 @@
               = link_to project_filter_path(sort: 'oldest') do
                 Oldest
               = link_to project_filter_path(sort: 'recently_updated') do
-                Recently Updated
+                Recently updated
               = link_to project_filter_path(sort: 'last_updated') do
                 Last Updated
 
