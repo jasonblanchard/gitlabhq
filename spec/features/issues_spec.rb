@@ -155,5 +155,13 @@ describe "Issues" do
         page.should have_selector("ul.issues-list li:first-child", :text => 'bar')
       end
     end
+
+    describe 'combine filter and sort' do
+
+      it 'sorts with a filter applied' do
+        pending
+      end
+    end
   end
+
 end
