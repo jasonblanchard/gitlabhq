@@ -23,6 +23,10 @@ class IssueObserver < BaseObserver
     issue.notice_added_references(issue.project, current_user)
   end
 
+  def after_send_for_review(issue, transition)
+    create_note(issue)
+  end
+
   protected
 
   # Create issue note with service comment like 'Status changed to closed'

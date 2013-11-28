@@ -42,14 +42,20 @@ class Issue < ActiveRecord::Base
 
   state_machine :state, initial: :opened do
     event :close do
-      transition [:reopened, :opened] => :closed
+      transition [:reopened, :opened, :ready_for_review] => :closed
     end
 
     event :reopen do
-      transition closed: :reopened
+      transition [:closed, :ready_for_review] => :reopened
+    end
+
+    event :send_for_review do
+      transition [:opened, :reopened] => :ready_for_review
     end
 
     state :opened
+
+    state :ready_for_review
 
     state :reopened
 

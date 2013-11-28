@@ -29,6 +29,7 @@ class Event < ActiveRecord::Base
   MERGED    = 7
   JOINED    = 8 # User joined project
   LEFT      = 9 # User left project
+  SENT_FOR_REVIEW  = 10
 
   delegate :name, :email, to: :author, prefix: true, allow_nil: true
   delegate :title, to: :issue, prefix: true, allow_nil: true
@@ -117,6 +118,10 @@ class Event < ActiveRecord::Base
     action == self.class::REOPENED
   end
 
+  def sent_for_review?
+    action == self.class::SENT_FOR_REVIEW
+  end
+
   def milestone?
     target_type == "Milestone"
   end
@@ -162,6 +167,8 @@ class Event < ActiveRecord::Base
       'joined'
     elsif left?
       'left'
+    elsif sent_for_review?
+      'sent for review'
     else
       "opened"
     end

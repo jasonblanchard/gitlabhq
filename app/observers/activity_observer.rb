@@ -25,6 +25,10 @@ class ActivityObserver < BaseObserver
     create_event(record, Event::REOPENED)
   end
 
+  def after_send_for_review(record, transition)
+    create_event(record, Event::SENT_FOR_REVIEW)
+  end
+
   protected
 
   def create_event(record, status)
