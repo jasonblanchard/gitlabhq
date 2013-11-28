@@ -57,7 +57,7 @@ class Note < ActiveRecord::Base
   before_create :set_diff, if: ->(n) { n.line_code.present? }
 
   def self.create_status_change_note(noteable, project, author, status, source)
-    body = "_Status changed to #{status}#{' by ' + source.gfm_reference if source}_"
+    body = "_Status changed to #{status.gsub(/_/,' ')}#{' by ' + source.gfm_reference if source}_"
 
     create({
       noteable: noteable,
