@@ -23,6 +23,9 @@
           opacity: .4
       )
 
+    $("body").on "change", "#issue_assignee_id", ->
+      console.log($(this).val())
+
   reload: ->
     Issues.initSelects()
     Issues.initChecks()
