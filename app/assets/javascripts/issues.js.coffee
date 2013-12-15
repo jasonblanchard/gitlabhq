@@ -1,9 +1,3 @@
-$ ->
-  # I think this is supposed to go somewhere else
-  $('.edit-issue.inline-update input[type="submit"]').hide();
-  $("body").on "change", "select", ->
-      $(this).submit()
-
 @Issues =
   init: ->
     Issues.initSearch()
@@ -85,3 +79,9 @@ $ ->
       $("#update_issues_ids").val []
       $(".issues_bulk_update").hide()
       $(".issues-filters").show()
+
+$ ->
+  $('.edit-issue.inline-update input[type="submit"]').hide();
+  $("body").on "change", "select", ->
+      $(this).submit()
+
