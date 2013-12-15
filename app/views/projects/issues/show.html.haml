@@ -20,7 +20,7 @@
         %i.icon-edit
         Edit
 
-      = form_for [@project, @issue], :remote => true, :html => {:class => 'inline-update'} do |f|
+      = form_for [@project, @issue], :remote => true, :html => {:class => 'edit-issue inline-update'} do |f|
         = f.select(:assignee_id, @project.team.members.sort_by(&:name).map {|p| [ p.name, p.id ] }, { include_blank: "Assign to" }, {class: 'chosen'})
         %br
         = f.submit :class => 'btn'
