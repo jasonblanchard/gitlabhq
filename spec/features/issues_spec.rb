@@ -1,5 +1,4 @@
 require 'spec_helper'
-require 'active_support/core_ext/string/filters'
 
 describe "Issues" do
   let(:project) { create(:project) }
@@ -202,7 +201,7 @@ describe "Issues" do
       find('.edit-issue.inline-update').select(milestone.title, from: 'issue_milestone_id')
       click_button 'Update Issue'
 
-      page.should have_content "and attached to milestone #{truncate(milestone.title, length: 20)}"
+      page.should have_content "and attached to milestone #{milestone.title[0..15]}"
     end
   end
 
