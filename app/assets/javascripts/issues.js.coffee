@@ -1,7 +1,7 @@
 $ ->
   # I think this is supposed to go somewhere else
   $('.edit-issue.inline-update input[type="submit"]').hide();
-  $("body").on "change", ".edit-issue.inline-update #issue_assignee_id", ->
+  $("body").on "change", "select", ->
       $(this).submit()
 
 @Issues =

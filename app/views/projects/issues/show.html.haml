@@ -23,6 +23,9 @@
       = form_for [@project, @issue], :remote => true, :html => {:class => 'edit-issue inline-update'} do |f|
         = f.select(:assignee_id, @project.team.members.sort_by(&:name).map {|p| [ p.name, p.id ] }, { include_blank: "Assign to" }, {class: 'chosen'})
         %br
+        = f.select(:milestone_id, @project.milestones.active.all.collect {|p| [ p.title, p.id ] }, { include_blank: "Select milestone" }, {class: 'chosen'})
+        = hidden_field_tag :issue_context
+        %br
         = f.submit :class => 'btn'
 .clearfix
 
