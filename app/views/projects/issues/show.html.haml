@@ -20,6 +20,16 @@
         %i.icon-edit
         Edit
 
+      - if !@issue.closed?
+        = form_for [@project, @issue], :remote => true, :html => {:class => 'edit-issue inline-update'} do |f|
+          .pull-left
+            = f.select(:assignee_id, @project.team.members.sort_by(&:name).map {|p| [ p.name, p.id ] }, { include_blank: "Assign to" }, {class: 'chosen'})
+          .pull-right
+            = f.select(:milestone_id, @project.milestones.active.all.collect {|p| [ p.title, p.id ] }, { include_blank: "Select milestone" }, {class: 'chosen'})
+          = hidden_field_tag :issue_context
+          = f.submit :class => 'btn'
+.clearfix
+
 .pull-right
   .span3#votes= render 'votes/votes_block', votable: @issue
 
@@ -39,21 +49,7 @@
 
   .ui-box-body
     %cite.cgray
-      Created by #{link_to_member(@project, @issue.author)}
-      - if @issue.assignee
-        \ and currently assigned to #{link_to_member(@project, @issue.assignee)}
-
-    - if @issue.milestone
-      - milestone = @issue.milestone
-      %cite.cgray and attached to milestone
-      %strong= link_to_gfm truncate(milestone.title, length: 20), project_milestone_path(milestone.project, milestone)
-
-    .pull-right
-      - @issue.labels.each do |label|
-        %span{class: "label #{label_css_class(label.name)}"}
-          %i.icon-tag
-          = label.name
-        &nbsp;
+      = render partial: 'issue_context', locals: { issue: @issue }
 
   - if @issue.description.present?
     .ui-box-bottom

@@ -10,6 +10,7 @@ v 6.4.0
   - Project web hooks now support issues and merge request events
   - Visiting project page while not logged in will redirect to sign-in instead of 404 (Jason Hollingsworth)
   - Expire event cache on avatar creation/removal (Drew Blessing)
+  - Dropdown menus on issue#show page for assignee and milestone (Jason Blanchard)
 
 v 6.3.0
   - API for adding gitlab-ci service

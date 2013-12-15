@@ -175,6 +175,36 @@ describe "Issues" do
     end
   end
 
+  describe 'update assignee from issue#show' do
+    let(:issue) { create(:issue, project: project, author: @user) }
+
+    it 'with dropdown menu' do
+      visit project_issue_path(project, issue)
+
+      find('.edit-issue.inline-update').select(project.team.members.first.name, from: 'issue_assignee_id')
+      click_button 'Update Issue'
+
+      page.should have_content "currently assigned to #{project.team.members.first.name}"
+    end
+
+  end
+
+  describe 'update milestone from issue#show' do
+    let!(:issue) { create(:issue, project: project, author: @user) }
+    let!(:milestone) { create(:milestone, project: project) }
+
+    it 'with dropdown menu' do
+      visit project_issue_path(project, issue)
+
+      p find('.edit-issue.inline-update').text
+
+      find('.edit-issue.inline-update').select(milestone.title, from: 'issue_milestone_id')
+      click_button 'Update Issue'
+
+      page.should have_content "and attached to milestone #{milestone.title[0..15]}"
+    end
+  end
+
   def first_issue
     all("ul.issues-list li").first.text
   end

@@ -2,3 +2,6 @@
   - if @issue.valid?
     :plain
       $("##{dom_id(@issue)}").fadeOut();
+- elsif params[:issue_context]
+  $('.ui-box-body').html("#{escape_javascript(render partial: 'issue_context', locals: { issue: @issue })}");
+  $('.ui-box-body').effect('highlight');
