@@ -1,7 +1,7 @@
 $ ->
   # I think this is supposed to go somewhere else
-  $("body").on "change", "#issue_assignee_id", ->
-      $(this).closest('form').submit()
+  $("body").on "change", ".inline-update #issue_assignee_id", ->
+      $(this).submit()
 
 @Issues =
   init: ->
