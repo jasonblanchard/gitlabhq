@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'active_support/core_ext/string/filters'
 
 describe "Issues" do
   let(:project) { create(:project) }
@@ -178,10 +179,8 @@ describe "Issues" do
   describe 'update assignee from issue#show' do
     let(:issue) { create(:issue, project: project, author: @user) }
 
-    it 'user can update assignee from dropdown menu' do
+    it 'with dropdown menu' do
       visit project_issue_path(project, issue)
-
-      puts find('.edit-issue.inline-update').text
 
       find('.edit-issue.inline-update').select(project.team.members.first.name, from: 'issue_assignee_id')
       click_button 'Update Issue'
@@ -189,6 +188,22 @@ describe "Issues" do
       page.should have_content "currently assigned to #{project.team.members.first.name}"
     end
 
+  end
+
+  describe 'update milestone from issue#show' do
+    let!(:issue) { create(:issue, project: project, author: @user) }
+    let!(:milestone) { create(:milestone, project: project) }
+
+    it 'with dropdown menu' do
+      visit project_issue_path(project, issue)
+
+      p find('.edit-issue.inline-update').text
+
+      find('.edit-issue.inline-update').select(milestone.title, from: 'issue_milestone_id')
+      click_button 'Update Issue'
+
+      page.should have_content "and attached to milestone #{truncate(milestone.title, length: 20)}"
+    end
   end
 
   def first_issue
