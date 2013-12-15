@@ -175,6 +175,22 @@ describe "Issues" do
     end
   end
 
+  describe 'update assignee from issue#show' do
+    let(:issue) { create(:issue, project: project, author: @user) }
+
+    it 'user can update assignee from dropdown menu' do
+      visit project_issue_path(project, issue)
+
+      puts find('.edit-issue.inline-update').text
+
+      find('.edit-issue.inline-update').select(project.team.members.first.name, from: 'issue_assignee_id')
+      click_button 'Update Issue'
+
+      page.should have_content "currently assigned to #{project.team.members.first.name}"
+    end
+
+  end
+
   def first_issue
     all("ul.issues-list li").first.text
   end
