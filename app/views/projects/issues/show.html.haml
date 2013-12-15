@@ -20,6 +20,12 @@
         %i.icon-edit
         Edit
 
+      = form_for [@project, @issue], :html => {:class => ''} do |f|
+        = f.select(:assignee_id, @project.team.members.sort_by(&:name).map {|p| [ p.name, p.id ] }, { include_blank: "Assign to" }, {class: 'chosen'})
+        %br
+        = f.submit :class => 'btn'
+.clearfix
+
 .pull-right
   .span3#votes= render 'votes/votes_block', votable: @issue
 
@@ -47,9 +53,6 @@
       - milestone = @issue.milestone
       %cite.cgray and attached to milestone
       %strong= link_to_gfm truncate(milestone.title, length: 20), project_milestone_path(milestone.project, milestone)
-
-    = form_for [@project, @issue], :html => {:class => 'pull-right'} do |f|
-      = f.select(:assignee_id, @project.team.members.sort_by(&:name).map {|p| [ p.name, p.id ] }, { include_blank: "Assign to" }, {class: 'chosen'})
 
     .pull-right
       - @issue.labels.each do |label|

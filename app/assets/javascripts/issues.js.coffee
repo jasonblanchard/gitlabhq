@@ -1,3 +1,8 @@
+$ ->
+  # I think this is supposed to go somewhere else
+  $("body").on "change", "#issue_assignee_id", ->
+      $(this).closest('form').submit()
+
 @Issues =
   init: ->
     Issues.initSearch()
@@ -22,9 +27,6 @@
           backgroundColor: '#DDD'
           opacity: .4
       )
-
-    $("body").on "change", "#issue_assignee_id", ->
-      console.log($(this).val())
 
   reload: ->
     Issues.initSelects()
