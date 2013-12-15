@@ -20,13 +20,14 @@
         %i.icon-edit
         Edit
 
-      = form_for [@project, @issue], :remote => true, :html => {:class => 'edit-issue inline-update'} do |f|
-        .pull-left
-          = f.select(:assignee_id, @project.team.members.sort_by(&:name).map {|p| [ p.name, p.id ] }, { include_blank: "Assign to" }, {class: 'chosen'})
-        .pull-right
-          = f.select(:milestone_id, @project.milestones.active.all.collect {|p| [ p.title, p.id ] }, { include_blank: "Select milestone" }, {class: 'chosen'})
-        = hidden_field_tag :issue_context
-        = f.submit :class => 'btn'
+      - if !@issue.closed?
+        = form_for [@project, @issue], :remote => true, :html => {:class => 'edit-issue inline-update'} do |f|
+          .pull-left
+            = f.select(:assignee_id, @project.team.members.sort_by(&:name).map {|p| [ p.name, p.id ] }, { include_blank: "Assign to" }, {class: 'chosen'})
+          .pull-right
+            = f.select(:milestone_id, @project.milestones.active.all.collect {|p| [ p.title, p.id ] }, { include_blank: "Select milestone" }, {class: 'chosen'})
+          = hidden_field_tag :issue_context
+          = f.submit :class => 'btn'
 .clearfix
 
 .pull-right
