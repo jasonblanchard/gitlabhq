@@ -192,9 +192,22 @@ describe "Issues" do
     end
 
     context 'by unauthorized user' do
+    
+      let(:guest) { create(:user) }
+      
+      before :each do
+        project.team << [[guest], :guest]
+        issue.assignee = @user
+        issue.save
+      end
 
-      it 'does not show dropdown menu' do
-        pending
+      it 'shows assignee text' do
+        logout
+        login_with guest
+
+        visit project_issue_path(project, issue)
+        page.should have_content "currently assigned to #{issue.assignee.name}"
+
       end
     end
 
@@ -220,9 +233,22 @@ describe "Issues" do
     end
 
     context 'by unauthorized user' do
+      
+      let(:guest) { create(:user) }
+      
+      before :each do
+        project.team << [[guest], :guest]
+        issue.milestone = milestone
+        issue.save
+      end
 
-      it 'does not show dropdown' do
-        pending
+      it 'shows milestone text' do
+        logout
+        login_with guest
+
+        visit project_issue_path(project, issue)
+
+        page.should have_content "attached to milestone #{milestone.title}"
       end
     end
   end
