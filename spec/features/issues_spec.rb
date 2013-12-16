@@ -178,13 +178,24 @@ describe "Issues" do
   describe 'update assignee from issue#show' do
     let(:issue) { create(:issue, project: project, author: @user) }
 
-    it 'with dropdown menu' do
-      visit project_issue_path(project, issue)
+    context 'by autorized user' do
 
-      find('.edit-issue.inline-update').select(project.team.members.first.name, from: 'issue_assignee_id')
-      click_button 'Update Issue'
+      it 'with dropdown menu' do
+        visit project_issue_path(project, issue)
 
-      page.should have_content "currently assigned to #{project.team.members.first.name}"
+        find('.edit-issue.inline-update').select(project.team.members.first.name, from: 'issue_assignee_id')
+        click_button 'Update Issue'
+
+        page.should have_content "currently assigned to"
+        page.has_select?('issue_assignee_id', :selected => project.team.members.first.name)
+      end
+    end
+
+    context 'by unauthorized user' do
+
+      it 'does not show dropdown menu' do
+        pending
+      end
     end
 
   end
@@ -193,15 +204,26 @@ describe "Issues" do
     let!(:issue) { create(:issue, project: project, author: @user) }
     let!(:milestone) { create(:milestone, project: project) }
 
-    it 'with dropdown menu' do
-      visit project_issue_path(project, issue)
+    context 'by authorized user' do
 
-      p find('.edit-issue.inline-update').text
+      it 'with dropdown menu' do
+        visit project_issue_path(project, issue)
 
-      find('.edit-issue.inline-update').select(milestone.title, from: 'issue_milestone_id')
-      click_button 'Update Issue'
+        p find('.edit-issue.inline-update').text
 
-      page.should have_content "and attached to milestone #{milestone.title[0..15]}"
+        find('.edit-issue.inline-update').select(milestone.title, from: 'issue_milestone_id')
+        click_button 'Update Issue'
+
+        page.should have_content "and attached to milestone"
+        page.has_select?('issue_assignee_id', :selected => milestone.title)
+      end
+    end
+
+    context 'by unauthorized user' do
+
+      it 'does not show dropdown' do
+        pending
+      end
     end
   end
 
