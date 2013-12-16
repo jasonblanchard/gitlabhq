@@ -26,10 +26,11 @@
 .back-link
   = link_to project_issues_path(@project) do
     &larr; To issues list
-  - if @issue.milestone
-    = link_to project_milestone_path(@project, @issue.milestone) do
-      |
-      = @issue.milestone.title
+  %span.milestone-nav-link
+    - if @issue.milestone
+      = link_to project_milestone_path(@project, @issue.milestone) do
+        |
+        = @issue.milestone.title
 
 .ui-box.ui-box-show
   .ui-box-head
