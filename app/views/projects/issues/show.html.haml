@@ -20,23 +20,16 @@
         %i.icon-edit
         Edit
 
-      - if !@issue.closed?
-        = form_for [@project, @issue], :remote => true, :html => {:class => 'edit-issue inline-update'} do |f|
-          .pull-left
-            = f.select(:assignee_id, @project.team.members.sort_by(&:name).map {|p| [ p.name, p.id ] }, { include_blank: "Assign to" }, {class: 'chosen'})
-          .pull-right
-            = f.select(:milestone_id, @project.milestones.active.all.collect {|p| [ p.title, p.id ] }, { include_blank: "Select milestone" }, {class: 'chosen'})
-          = hidden_field_tag :issue_context
-          = f.submit :class => 'btn'
-.clearfix
-
 .pull-right
   .span3#votes= render 'votes/votes_block', votable: @issue
 
 .back-link
   = link_to project_issues_path(@project) do
     &larr; To issues list
-
+  - if @issue.milestone
+    = link_to project_milestone_path(@project, @issue.milestone) do
+      |
+      = @issue.milestone.title
 
 .ui-box.ui-box-show
   .ui-box-head
