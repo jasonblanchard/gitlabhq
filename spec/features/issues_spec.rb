@@ -245,6 +245,20 @@ describe "Issues" do
         page.should have_content milestone.title
       end
     end
+
+    context 'removing assignee' do
+
+      before :each do
+        user2 = create(:user)
+        issue.assignee = user2
+        issue.save
+      end
+
+      it 'allows user to remove assignee' do
+        visit project_issu_path(project, issue)
+        page.should have_content "Assignee #{user2.name}"
+      end
+    end
   end
 
   def first_issue
